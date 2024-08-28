@@ -11,10 +11,10 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div :class="['relative','card-container','min-w-[300px]', props.class]">
+    <div :class="['relative', 'card-container', 'min-w-[300px]', props.class]">
         <div
-            class="absolute inset-0 -z-10 bg-gradient-to-br from-[#B0E2FF] to-[#D4F1F4] rounded-2xl shadow-lg "
-        ></div>
+            class="absolute inset-0 -z-10 bg-gradient-to-br from-[#B0E2FF] to-[#D4F1F4] rounded-2xl shadow-lg"
+        />
         <div
             class="bg-white p-6 rounded-2xl shadow-lg text-center transform-gpu transition-transform duration-500 ease-in-out hover:animate-none animate-translate"
         >
@@ -55,6 +55,6 @@ const props = defineProps<{
 }
 
 .card-container:hover .animate-translate {
-    animation: none
+    animation: none;
 }
 </style>
