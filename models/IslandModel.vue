@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import islandSceneUrl from '~/assets/3d/island.glb?url'
 import { DRACOLoader } from 'three-stdlib'
-import { ReloadIcon } from '@radix-icons/vue'
 
 const props = defineProps<{
     isRotating: boolean
@@ -13,7 +12,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['update:isRotating', 'update:currentStage'])
 const container = ref<HTMLDivElement | null>(null)
-const isLoaded = ref(false)  // Dodajemy stan śledzenia załadowania
+const isLoaded = ref(false) // Dodajemy stan śledzenia załadowania
 
 let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
@@ -73,21 +72,17 @@ const createCloud = () => {
     const numBlobs = Math.floor(Math.random() * 5) + 3
 
     for (let i = 0; i < numBlobs; i++) {
-        const geometry = new THREE.SphereGeometry(
-            Math.random() * 3 + 1,
-            32,
-            32
-        )
+        const geometry = new THREE.SphereGeometry(Math.random() * 3 + 1, 32, 32)
         const material = new THREE.MeshStandardMaterial({
             color: 0xffffff,
-            metalness: -3
+            metalness: -3,
         })
         const cloudPart = new THREE.Mesh(geometry, material)
 
         cloudPart.position.set(
             Math.random() * 4 - 2,
             Math.random() * 2,
-            Math.random() * 4 - 2
+            Math.random() * 4 - 2,
         )
         cloudGroup.add(cloudPart)
     }
@@ -152,7 +147,8 @@ const animate = () => {
 
         clouds.children.forEach((cloud: THREE.Object3D) => {
             cloud.rotation.y += 0.0005
-            cloud.position.y += Math.sin(Date.now() * 0.0005 + cloud.position.x) * 0.005
+            cloud.position.y +=
+                Math.sin(Date.now() * 0.0005 + cloud.position.x) * 0.005
         })
     }
 
@@ -169,7 +165,7 @@ const handleResize = () => {
         camera.updateProjectionMatrix()
         renderer.setSize(
             container.value.clientWidth,
-            container.value.clientHeight
+            container.value.clientHeight,
         )
     }
 }
@@ -181,12 +177,12 @@ onMounted(() => {
             75,
             container.value.clientWidth / container.value.clientHeight,
             0.1,
-            1000
+            1000,
         )
         renderer = new THREE.WebGLRenderer({ antialias: true })
         renderer.setSize(
             container.value.clientWidth,
-            container.value.clientHeight
+            container.value.clientHeight,
         )
         container.value.appendChild(renderer.domElement)
         renderer.setClearColor(0x87ceeb)
@@ -212,7 +208,7 @@ onMounted(() => {
             island.rotation.y = 4.67
             emit('update:currentStage', 1)
             scene.add(island)
-            isLoaded.value = true  // Ustawiamy isLoaded na true po załadowaniu sceny
+            isLoaded.value = true // Ustawiamy isLoaded na true po załadowaniu sceny
             animate()
         })
 
@@ -236,23 +232,18 @@ onUnmounted(() => {
     window.removeEventListener('resize', handleResize)
 })
 
-watch(
-    () => props.currentFocusPoint,
-    (newFocusPoint) => {
-        // Handle focus point changes here
-    }
-)
+// watch(
+//     () => props.currentFocusPoint,
+//     (newFocusPoint) => {
+//         // Handle focus point changes here
+//     },
+// )
 </script>
 <template>
-    <div
-        ref="container"
-        class="w-full overflow-hidden cursor-pointer h-full "
-    >
-
-        <div v-if="!isLoaded" class="fallback ">
+    <div ref="container" class="w-full overflow-hidden cursor-pointer h-full">
+        <div v-if="!isLoaded" class="fallback">
             <Icon name="svg-spinners:12-dots-scale-rotate" size="90" />
         </div>
-
     </div>
 </template>
 
