@@ -1,9 +1,9 @@
 <template>
     <div class="container mx-auto">
-        <header class="flex h-20 justify-between items-center py-4 mx-auto top-0 z-10 right-0 left-0">
+        <header class="left-0 right-0 top-0 z-10 mx-auto flex h-20 items-center justify-between py-4">
             <Button href="/">PP</Button>
 
-            <nav class="flex text-lg gap-7 font-medium">
+            <nav class="flex gap-7 text-lg font-medium">
                 <Button href="/about" variant="link">About</Button>
                 <Button href="/projects" variant="link">Projects</Button>
             </nav>

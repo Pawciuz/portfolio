@@ -5,6 +5,9 @@
 </template>
 
 <script setup>
+useHead({
+    title: 'Projects',
+});
 const projects = [
     {
         name: 'V-Journal',

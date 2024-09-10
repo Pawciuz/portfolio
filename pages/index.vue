@@ -2,19 +2,15 @@
 import { type Ref, ref } from 'vue';
 import { useGlobalState } from '@/lib/store/islandRotationState';
 import IslandModel from '~/models/IslandModel.vue';
-
+useHead({
+    title: 'Main page',
+});
 const isRotating: Ref<boolean> = ref(false);
-const currentStage: Ref<number | null> = ref(null);
 const currentFocusPoint: Ref<number | null> = ref(null);
 const globalState = useGlobalState();
 
 const updateIsRotating = (value: boolean): void => {
     isRotating.value = value;
-};
-
-const updateCurrentStage = (value: number | null): void => {
-    globalState.setCurrentStage(value);
-    currentFocusPoint.value = globalState.state.rotationPosition;
 };
 </script>
 

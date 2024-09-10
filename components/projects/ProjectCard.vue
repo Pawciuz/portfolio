@@ -1,13 +1,13 @@
 <template>
     <div
-        class="project-card w-full border-4 border-blue-400 bg-gradient-to-br from-white to-blue-100 p-10 shadow-md transition-all hover:shadow-lg"
+        class="project-card w-full rounded-xl bg-gradient-to-tl from-sky-100 from-10% via-sky-200 via-75% to-sky-300 to-100% p-10 shadow-[inset_0_0_10px_2px_rgba(59,130,246,0.5)] transition-all"
     >
-        <h1 class="font-display mb-4 w-full text-center text-3xl font-bold text-blue-400">
+        <h1 class="font-display mb-4 w-full text-center text-3xl font-bold text-blue-600">
             {{ project.name }}
         </h1>
 
         <div class="m-10">
-            <Carousel class="mx-auto w-full max-w-[800px]">
+            <Carousel class="mx-auto w-full">
                 <CarouselContent>
                     <CarouselItem
                         v-for="(image, index) in project.images"
@@ -18,7 +18,7 @@
                             <img
                                 :src="image"
                                 :alt="`Project image ${index + 1}`"
-                                class="max-h-[400px] w-full cursor-pointer object-contain"
+                                class="max-h-[400px] w-full cursor-pointer rounded-xl object-contain"
                                 @click="openDialog(image)"
                             />
                         </div>
@@ -32,7 +32,7 @@
         <div class="flex flex-col md:flex-row md:space-x-6">
             <div v-if="project.technologies" class="w-full md:w-1/2">
                 <div class="animate-fade-in mb-4">
-                    <h2 class="font-display mb-2 text-xl font-semibold text-gray-700">Technologies & Tools</h2>
+                    <h2 class="font-display mb-2 text-xl font-semibold text-blue-600">Technologies & Tools</h2>
                     <ul class="font-body list-inside list-disc">
                         <li
                             v-for="(tech, index) in project.technologies"
@@ -46,7 +46,7 @@
             </div>
             <div v-if="project.features" class="w-full md:w-1/2">
                 <div class="animate-fade-in mb-4" style="animation-delay: 0.2s">
-                    <h2 class="font-display mb-2 text-xl font-semibold text-gray-700">Features</h2>
+                    <h2 class="font-display mb-2 text-xl font-semibold text-blue-600">Features</h2>
                     <ul class="font-body list-inside list-disc">
                         <li
                             v-for="(feature, index) in project.features"
@@ -58,11 +58,11 @@
                     </ul>
                 </div>
                 <div v-if="project.methodology" class="animate-fade-in mb-4" style="animation-delay: 0.4s">
-                    <h2 class="font-display mb-2 text-xl font-semibold text-gray-700">Methodology</h2>
+                    <h2 class="font-display mb-2 text-xl font-semibold text-blue-600">Methodology</h2>
                     <p class="font-body text-gray-600">{{ project.methodology }}</p>
                 </div>
                 <div v-if="project.team" class="animate-fade-in" style="animation-delay: 0.6s">
-                    <h2 class="font-display mb-2 text-xl font-semibold text-gray-700">Team</h2>
+                    <h2 class="font-display mb-2 text-xl font-semibold text-blue-600">Team</h2>
                     <p class="font-body text-gray-600">{{ project.team }}</p>
                 </div>
             </div>

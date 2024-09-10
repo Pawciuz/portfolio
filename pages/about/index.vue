@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useHead({
+    title: 'About',
+});
+</script>
 <template>
     <div
-        class="grid w-full grid-cols-1 gap-6 border-4 border-blue-400 bg-gradient-to-br from-white to-blue-100 p-10 md:grid-cols-2"
+        class="grid w-full grid-cols-1 gap-6 rounded-xl bg-gradient-to-tl from-sky-100 from-10% via-sky-200 via-75% to-sky-300 to-100% p-10 shadow-[inset_0_0_10px_2px_rgba(59,130,246,0.5)] md:grid-cols-2"
     >
         <div class="mb-6 flex justify-center fade-in md:mb-0" style="animation-delay: 0.1s">
             <img src="/main-photo.jpeg" class="w-[300px] rounded-full border-4 border-blue-300" alt="Profile Photo" />
