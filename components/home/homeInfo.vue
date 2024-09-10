@@ -1,23 +1,18 @@
 <script setup lang="ts">
-import AnimatedCard from '~/components/home/AnimatedCard/AnimatedCard.vue'
+import AnimatedCard from '~/components/home/AnimatedCard/AnimatedCard.vue';
 
 const props = defineProps<{
     currentStage: number | null;
     class: string;
-}>()
+}>();
 </script>
 
 <template>
     <div :class="props.class">
-        <!-- Stage 1 -->
         <div v-if="props.currentStage === 1">
-            <AnimatedCard
-                heading="Hi, I'm Pawel 👋"
-                paragraph="A Software Engineer from Poland"
-            />
+            <AnimatedCard heading="Hi, I'm Pawel 👋" paragraph="A Software Engineer from Poland" />
         </div>
 
-        <!-- Stage 2 -->
         <div v-if="props.currentStage === 2">
             <AnimatedCard
                 heading="Worked with many companies"
@@ -27,7 +22,6 @@ const props = defineProps<{
             />
         </div>
 
-        <!-- Stage 3 -->
         <div v-if="props.currentStage === 3">
             <AnimatedCard
                 heading="Led multiple projects to success"
@@ -46,8 +40,5 @@ const props = defineProps<{
                 buttonHref="/contact"
             />
         </div>
-
-        
     </div>
 </template>
-
