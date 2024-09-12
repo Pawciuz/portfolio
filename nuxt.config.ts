@@ -47,4 +47,9 @@ export default defineNuxtConfig({
     typescript: {
         typeCheck: false,
     },
+    nitro: {
+        prerender: {
+            routes: ['/about', '/projects', '/'],
+        },
+    },
 });
