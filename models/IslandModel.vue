@@ -207,12 +207,16 @@ const initializeScene = () => {
         });
     }
 };
+const handlePointerLeave = () => {
+    emit('update:isRotating', false);
+};
 
 const setupEventListeners = () => {
     if (container.value) {
         container.value.addEventListener('pointerdown', handlePointerDown);
         container.value.addEventListener('pointerup', handlePointerUp);
         container.value.addEventListener('pointermove', handlePointerMove);
+        container.value.addEventListener('pointerleave', handlePointerLeave);
     }
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -224,6 +228,7 @@ const cleanupEventListeners = () => {
         container.value.removeEventListener('pointerdown', handlePointerDown);
         container.value.removeEventListener('pointerup', handlePointerUp);
         container.value.removeEventListener('pointermove', handlePointerMove);
+        container.value.removeEventListener('pointerleave', handlePointerLeave);
     }
     window.removeEventListener('keydown', handleKeyDown);
     window.removeEventListener('keyup', handleKeyUp);

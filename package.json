@@ -19,6 +19,7 @@
         "@nuxt/types": "^2.18.1",
         "@types/bun": "latest",
         "@types/three": "^0.167.2",
+        "@vue/typescript-plugin": "^2.1.6",
         "autoprefixer": "^10.4.20",
         "eslint": "^9.9.1",
         "nuxt": "^3.13.0",
