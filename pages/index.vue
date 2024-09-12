@@ -18,7 +18,7 @@ const updateIsRotating = (value: boolean): void => {
 </script>
 
 <template>
-    <div class="relative h-[calc(100vh-80px)] overflow-hidden">
+    <div class="relative h-[calc(100vh-80px)] overflow-hidden overscroll-none">
         <HomeInfo :current-stage="globalState.state.currentStage" class="absolute left-1/2 top-10 translate-x-[-50%]" />
         <KeepAlive>
             <IslandModel
