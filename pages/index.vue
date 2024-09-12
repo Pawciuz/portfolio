@@ -28,7 +28,7 @@ const updateIsRotating = (value: boolean): void => {
             />
         </KeepAlive>
         <iframe
-            class="z-9999 fixed bottom-[5vh] left-[50%] translate-x-[-50%]"
+            class="z-9999 fixed bottom-[1vh] left-[50%] translate-x-[-50%] md:bottom-[5vh]"
             src="https://lottie.host/embed/06040897-ef6f-4cba-b68b-32060d75b16a/kRpsKPIEUE.json"
         />
     </div>
