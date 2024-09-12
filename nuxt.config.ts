@@ -1,7 +1,35 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: { enabled: true },
-    modules: ['@nuxtjs/tailwindcss', 'shadcn-nuxt', '@tresjs/nuxt', '@nuxt/eslint', '@nuxt/icon'],
+    runtimeConfig: {
+        public: {
+            to: process.env.MAIL_TO,
+            user: process.env.SMTP_HOST,
+            pass: process.env.SMTP_PASS,
+        },
+    },
+    modules: [
+        '@nuxtjs/tailwindcss',
+        'shadcn-nuxt',
+        '@tresjs/nuxt',
+        '@nuxt/eslint',
+        '@nuxt/icon',
+        [
+            'nuxt-mail',
+            {
+                message: {
+                    to: process.env.MAIL_TO,
+                },
+                smtp: {
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.SMTP_HOST,
+                        pass: process.env.SMTP_PASS,
+                    },
+                },
+            },
+        ],
+    ],
 
     shadcn: {
         /**

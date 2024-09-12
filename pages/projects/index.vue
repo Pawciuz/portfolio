@@ -1,9 +1,3 @@
-<template>
-    <div class="flex flex-col gap-5 pb-5">
-        <ProjectsProjectCard v-for="project in projects" :key="project.name" :name="project.name" :project="project" />
-    </div>
-</template>
-
 <script setup>
 useHead({
     title: 'Projects',
@@ -58,3 +52,8 @@ const projects = [
     },
 ];
 </script>
+<template>
+    <div class="flex flex-col gap-5 pb-5">
+        <ProjectsProjectCard v-for="project in projects" :key="project.name" :name="project.name" :project="project" />
+    </div>
+</template>

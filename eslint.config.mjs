@@ -15,5 +15,11 @@ export default withNuxt({
                 math: 'always',
             },
         ],
+        'vue/component-tags-order': [
+            'error',
+            {
+                order: ['script', 'template', 'style'],
+            },
+        ],
     },
 });

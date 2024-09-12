@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, shallowRef, onMounted, onBeforeUnmount } from 'vue';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import islandSceneUrl from '~/assets/3d/island.glb?url';
@@ -14,16 +14,18 @@ const props = defineProps<{
 const globalState = useGlobalState();
 const emit = defineEmits(['update:isRotating']);
 const container = ref<HTMLDivElement | null>(null);
-const isLoaded = ref(false); // Dodajemy stan śledzenia załadowania
+const isLoaded = ref(false);
 
-let scene: THREE.Scene;
-let camera: THREE.PerspectiveCamera;
-let renderer: THREE.WebGLRenderer;
-let island: THREE.Object3D | null = null;
-let clouds: THREE.Group | null = null;
+const scene = shallowRef<THREE.Scene | null>(null);
+const camera = shallowRef<THREE.PerspectiveCamera | null>(null);
+const renderer = shallowRef<THREE.WebGLRenderer | null>(null);
+const island = shallowRef<THREE.Object3D | null>(null);
+const clouds = shallowRef<THREE.Group | null>(null);
+
 let rotationSpeed = 0;
 const lastX = ref(0);
 const dampingFactor = 0.95;
+let animationFrameId: number | null = null;
 
 const handlePointerDown = (event: PointerEvent) => {
     event.stopPropagation();
@@ -41,18 +43,18 @@ const handlePointerUp = (event: PointerEvent) => {
 const handlePointerMove = (event: PointerEvent) => {
     event.stopPropagation();
     event.preventDefault();
-    if (props.isRotating && island && clouds) {
+    if (props.isRotating && island.value && clouds.value) {
         const clientX = event.clientX;
         const delta = (clientX - lastX.value) / window.innerWidth;
-        island.rotation.y += delta * 0.5 * Math.PI;
-        clouds.rotation.y += delta * 0.5 * Math.PI;
+        island.value.rotation.y += delta * 0.5 * Math.PI;
+        clouds.value.rotation.y += delta * 0.5 * Math.PI;
         lastX.value = clientX;
         rotationSpeed = delta * 0.01;
     }
 };
 
 const handleKeyDown = (event: KeyboardEvent) => {
-    if (island && clouds) {
+    if (island.value && clouds.value) {
         if (event.key === 'ArrowLeft') {
             if (!props.isRotating) emit('update:isRotating', true);
             rotationSpeed = 0.01;
@@ -89,7 +91,7 @@ const createCloud = () => {
 };
 
 const setupClouds = () => {
-    clouds = new THREE.Group();
+    const cloudsGroup = new THREE.Group();
     const numClouds = 100;
 
     for (let i = 0; i < numClouds; i++) {
@@ -102,23 +104,26 @@ const setupClouds = () => {
         cloud.lookAt(new THREE.Vector3(0, 0, 0));
         cloud.scale.multiplyScalar(Math.random() * 2 + 1);
 
-        clouds.add(cloud);
+        cloudsGroup.add(cloud);
     }
-    scene.add(clouds);
+    clouds.value = cloudsGroup;
+    scene.value?.add(cloudsGroup);
 };
 
 const animate = () => {
-    requestAnimationFrame(animate);
+    if (!isLoaded.value) return;
 
-    if (island && clouds) {
+    animationFrameId = requestAnimationFrame(animate);
+
+    if (island.value && clouds.value) {
         if (!props.isRotating) {
             rotationSpeed *= dampingFactor;
             if (Math.abs(rotationSpeed) < 0.001) {
                 rotationSpeed = 0;
             }
 
-            island.rotation.y += rotationSpeed;
-            clouds.rotation.y += rotationSpeed;
+            island.value.rotation.y += rotationSpeed;
+            clouds.value.rotation.y += rotationSpeed;
         } else {
             const rotation = globalState.state.rotationPosition;
             const normalizedRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
@@ -141,48 +146,52 @@ const animate = () => {
                     break;
             }
             globalState.setCurrentStage(currentStage);
-            globalState.setRotationPosition(((island.rotation.y % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI));
+            globalState.setRotationPosition(((island.value.rotation.y % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI));
         }
 
-        clouds.children.forEach((cloud: THREE.Object3D) => {
+        clouds.value.children.forEach((cloud: THREE.Object3D) => {
             cloud.rotation.y += 0.0005;
             cloud.position.y += Math.sin(Date.now() * 0.0005 + cloud.position.x) * 0.005;
         });
     }
 
-    if (renderer && scene && camera) {
-        renderer.render(scene, camera);
+    if (renderer.value && scene.value && camera.value) {
+        renderer.value.render(scene.value, camera.value);
     }
 };
 
 const handleResize = () => {
-    if (container.value && camera && renderer) {
-        camera.aspect = container.value.clientWidth / container.value.clientHeight;
-
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.value.clientWidth, container.value.clientHeight);
+    if (container.value && camera.value && renderer.value) {
+        camera.value.aspect = container.value.clientWidth / container.value.clientHeight;
+        camera.value.updateProjectionMatrix();
+        renderer.value.setSize(container.value.clientWidth, container.value.clientHeight);
     }
 };
 
-onMounted(() => {
-    if (container.value) {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, container.value.clientWidth / container.value.clientHeight, 0.1, 1000);
-        renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(container.value.clientWidth, container.value.clientHeight);
-        container.value.appendChild(renderer.domElement);
-        renderer.setClearColor(0x87ceeb);
+const initializeScene = () => {
+    if (container.value && !scene.value) {
+        scene.value = new THREE.Scene();
+        camera.value = new THREE.PerspectiveCamera(
+            75,
+            container.value.clientWidth / container.value.clientHeight,
+            0.1,
+            1000,
+        );
+        renderer.value = new THREE.WebGLRenderer({ antialias: true });
+        renderer.value.setSize(container.value.clientWidth, container.value.clientHeight);
+        container.value.appendChild(renderer.value.domElement);
+        renderer.value.setClearColor(0x87ceeb);
 
         setupClouds();
 
-        camera.position.z = 60;
-        camera.position.y = 10;
+        camera.value.position.z = 60;
+        camera.value.position.y = 10;
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
+        scene.value.add(ambientLight);
 
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
         directionalLight.position.set(5, 10, 7.5);
-        scene.add(directionalLight);
+        scene.value.add(directionalLight);
 
         const loader = new GLTFLoader();
         const dracoLoader = new DRACOLoader();
@@ -190,23 +199,27 @@ onMounted(() => {
         loader.setDRACOLoader(dracoLoader);
 
         loader.load(islandSceneUrl, (gltf) => {
-            island = gltf.scene;
-            island.rotation.y = globalState.state.rotationPosition;
-            scene.add(island);
-            isLoaded.value = true; // Ustawiamy isLoaded na true po załadowaniu sceny
+            island.value = gltf.scene;
+            island.value.rotation.y = globalState.state.rotationPosition;
+            scene.value?.add(island.value);
+            isLoaded.value = true;
             animate();
         });
+    }
+};
 
+const setupEventListeners = () => {
+    if (container.value) {
         container.value.addEventListener('pointerdown', handlePointerDown);
         container.value.addEventListener('pointerup', handlePointerUp);
         container.value.addEventListener('pointermove', handlePointerMove);
-        window.addEventListener('keydown', handleKeyDown);
-        window.addEventListener('keyup', handleKeyUp);
-        window.addEventListener('resize', handleResize);
     }
-});
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    window.addEventListener('resize', handleResize);
+};
 
-onUnmounted(() => {
+const cleanupEventListeners = () => {
     if (container.value) {
         container.value.removeEventListener('pointerdown', handlePointerDown);
         container.value.removeEventListener('pointerup', handlePointerUp);
@@ -215,29 +228,21 @@ onUnmounted(() => {
     window.removeEventListener('keydown', handleKeyDown);
     window.removeEventListener('keyup', handleKeyUp);
     window.removeEventListener('resize', handleResize);
+};
+
+onMounted(() => {
+    initializeScene();
+    setupEventListeners();
 });
 
-// watch(
-//     () => props.currentFocusPoint,
-//     (newFocusPoint) => {
-//         // Handle focus point changes here
-//     },
-// )
+onBeforeUnmount(() => {
+    cleanupEventListeners();
+    if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+    }
+});
 </script>
-<template>
-    <div ref="container" class="h-full w-full cursor-pointer overflow-hidden">
-        <div v-if="!isLoaded" class="fallback">
-            <Icon name="svg-spinners:12-dots-scale-rotate" size="90" />
-        </div>
-    </div>
-</template>
 
-<style scoped>
-.fallback {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    color: #ffffff;
-}
-</style>
+<template>
+    <div ref="container" class="h-full w-full cursor-pointer overflow-hidden" />
+</template>

@@ -1,3 +1,33 @@
+<script lang="ts" setup>
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+
+interface ProjectData {
+    name: string;
+    technologies: string[];
+    features: string[];
+    methodology: string;
+    team: string;
+    images: string[];
+}
+
+defineProps({
+    project: {
+        type: Object as PropType<ProjectData>,
+        required: true,
+    },
+});
+const dialogOpen = ref(false);
+const dialogImage = ref('');
+const dialogTitle = ref('');
+
+const openDialog = (image: string) => {
+    dialogImage.value = image;
+    dialogTitle.value = 'Project Image';
+    dialogOpen.value = true;
+};
+</script>
+
 <template>
     <div
         class="project-card w-full rounded-xl bg-gradient-to-tl from-sky-100 from-10% via-sky-200 via-75% to-sky-300 to-100% p-10 shadow-[inset_0_0_10px_2px_rgba(59,130,246,0.5)] transition-all"
@@ -28,7 +58,6 @@
                 <CarouselNext />
             </Carousel>
         </div>
-
         <div class="flex flex-col md:flex-row md:space-x-6">
             <div v-if="project.technologies" class="w-full md:w-1/2">
                 <div class="animate-fade-in mb-4">
@@ -79,41 +108,11 @@
             </DialogHeader>
             <img :src="dialogImage" class="h-full object-contain" />
             <DialogFooter class="w-full">
-                <button type="button" @click="dialogOpen = false" class="btn">Close</button>
+                <button type="button" class="btn" @click="dialogOpen = false">Close</button>
             </DialogFooter>
         </DialogContent>
     </Dialog>
 </template>
-
-<script lang="ts" setup>
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-
-interface ProjectData {
-    name: string;
-    technologies: string[];
-    features: string[];
-    methodology: string;
-    team: string;
-    images: string[];
-}
-
-defineProps({
-    project: {
-        type: Object as PropType<ProjectData>,
-        required: true,
-    },
-});
-const dialogOpen = ref(false);
-const dialogImage = ref('');
-const dialogTitle = ref('');
-
-const openDialog = (image: string) => {
-    dialogImage.value = image;
-    dialogTitle.value = 'Project Image';
-    dialogOpen.value = true;
-};
-</script>
 
 <style scoped>
 .font-display {
