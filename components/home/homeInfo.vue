@@ -17,7 +17,7 @@ const props = defineProps<{
             <AnimatedCard
                 button-text="Learn about me"
                 button-href="/about"
-                heading="Worked with many companies"
+                heading="Has lot of skills and experience"
                 paragraph="Want to know more?"
             />
         </div>
