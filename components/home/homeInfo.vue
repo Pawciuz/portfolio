@@ -15,10 +15,10 @@ const props = defineProps<{
 
         <div v-if="props.currentStage === 2">
             <AnimatedCard
+                button-text="Learn about me"
+                button-href="/about"
                 heading="Worked with many companies"
-                paragraph="Picked up many skills along the way"
-                buttonText="Learn more"
-                buttonHref="/about"
+                paragraph="Want to know more?"
             />
         </div>
 
@@ -26,8 +26,8 @@ const props = defineProps<{
             <AnimatedCard
                 heading="Led multiple projects to success"
                 paragraph="Curious about the impact?"
-                buttonText="Visit my portfolio"
-                buttonHref="/projects"
+                button-text="Visit my portfolio"
+                button-href="/projects"
             />
         </div>
 
@@ -36,8 +36,8 @@ const props = defineProps<{
             <AnimatedCard
                 heading="Need a project done or looking for a dev?"
                 paragraph="I'm just a few keystrokes away"
-                buttonText="Let's talk"
-                buttonHref="/contact"
+                button-text="Let's talk"
+                button-href="/contact"
             />
         </div>
     </div>

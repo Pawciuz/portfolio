@@ -3,11 +3,6 @@ import type { LinkItem } from './types';
 const technologies: LinkItem[] = [
     { name: 'Angular', url: 'https://angular.io', icon: 'https://angular.io/assets/images/logos/angular/angular.svg' },
     {
-        name: 'Blender',
-        url: 'https://www.blender.org/',
-        icon: 'https://download.blender.org/branding/community/blender_community_badge_white.svg',
-    },
-    {
         name: 'CSS3',
         url: 'https://www.w3schools.com/css/',
         icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg',
@@ -64,11 +59,7 @@ const technologies: LinkItem[] = [
         url: 'https://www.postgresql.org',
         icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg',
     },
-    {
-        name: 'Postman',
-        url: 'https://postman.com',
-        icon: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg',
-    },
+
     {
         name: 'Python',
         url: 'https://www.python.org',
@@ -150,6 +141,11 @@ const tools: LinkItem[] = [
         icon: 'https://resources.jetbrains.com/storage/products/intellij-idea/img/meta/intellij-idea_logo_300x300.png',
     },
     { name: 'Figma', url: 'https://www.figma.com/', icon: 'https://www.vectorlogo.zone/logos/figma/figma-icon.svg' },
+    {
+        name: 'Postman',
+        url: 'https://postman.com',
+        icon: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg',
+    },
     {
         name: 'Blender',
         url: 'https://www.blender.org/',

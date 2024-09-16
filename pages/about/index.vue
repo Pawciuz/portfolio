@@ -19,6 +19,22 @@ useHead({
                 responsive web applications. I specialize in Frontend, with a keen eye for design and user experience. I
                 enjoy solving complex problems and continuously learning new technologies to enhance my skill set.
             </p>
+            <div class="flex gap-4">
+                <AboutIconLink
+                    :link="{
+                        name: 'LinkedIn',
+                        url: 'https://www.linkedin.com/in/podgorskipawel16',
+                        icon: 'https://cdn-icons-png.flaticon.com/512/174/174857.png',
+                    }"
+                />
+                <AboutIconLink
+                    :link="{
+                        name: 'Github',
+                        url: 'https://github.com/Pawciuz',
+                        icon: 'https://cdn-icons-png.flaticon.com/512/25/25231.png',
+                    }"
+                />
+            </div>
         </div>
         <div class="fade-in" style="animation-delay: 0.8s">
             <h2 class="mb-4 text-2xl font-bold text-blue-900">Technologies</h2>
