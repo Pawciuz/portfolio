@@ -129,16 +129,16 @@ const animate = () => {
             const normalizedRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
             let currentStage: number | null;
             switch (true) {
-                case normalizedRotation >= 5.25 && normalizedRotation <= 5.85:
+                case normalizedRotation >= 5.25 && normalizedRotation <= 6.5:
                     currentStage = 4;
                     break;
-                case normalizedRotation >= 0.65 && normalizedRotation <= 1.3:
+                case normalizedRotation >= 0.45 && normalizedRotation <= 1.3:
                     currentStage = 3;
                     break;
-                case normalizedRotation >= 2.3 && normalizedRotation <= 2.7:
+                case normalizedRotation >= 1.8 && normalizedRotation <= 3.2:
                     currentStage = 2;
                     break;
-                case normalizedRotation >= 4.25 && normalizedRotation <= 4.75:
+                case normalizedRotation >= 4 && normalizedRotation <= 4.75:
                     currentStage = 1;
                     break;
                 default:
