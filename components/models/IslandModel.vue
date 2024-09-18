@@ -2,9 +2,9 @@
 import { ref, shallowRef, onMounted, onBeforeUnmount } from 'vue';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import islandSceneUrl from '~/assets/3d/island.glb?url';
+import islandSceneUrl from '@/assets/3d/island.glb?url';
 import { DRACOLoader } from 'three-stdlib';
-import { useGlobalState } from '@/lib/store/islandRotationState';
+import { useGlobalState } from '~/composables/store/islandRotationState';
 
 const props = defineProps<{
     isRotating: boolean;

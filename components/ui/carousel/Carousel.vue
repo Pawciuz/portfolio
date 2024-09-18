@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useProvideCarousel } from './useCarousel';
 import type { CarouselEmits, CarouselProps, WithClassAsProps } from './interface';
-import { cn } from '@/lib/utils';
+import { cn } from '~/composables/utils';
 
 const props = withDefaults(defineProps<CarouselProps & WithClassAsProps>(), {
-    orientation: 'horizontal',
+    orientation: 'horizontal'
 });
 
 const emits = defineEmits<CarouselEmits>();
@@ -19,7 +19,7 @@ defineExpose({
     carouselRef,
     orientation,
     scrollNext,
-    scrollPrev,
+    scrollPrev
 });
 
 function onKeyDown(event: KeyboardEvent) {
