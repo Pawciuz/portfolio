@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import type { ProjectData } from '~/components/projects/ProjectCard.vue';
 useHead({
     title: 'Projects',
 });
-const projects = [
+const projects: ProjectData[] = [
     {
         name: 'V-Journal',
         technologies: [

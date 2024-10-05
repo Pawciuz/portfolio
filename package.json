@@ -10,6 +10,7 @@
         "postinstall": "nuxt prepare"
     },
     "devDependencies": {
+        "@nuxtjs/tailwindcss": "^6.12.1",
         "@babel/eslint-parser": "^7.25.1",
         "@nuxt/devtools": "latest",
         "@nuxt/eslint": "^0.5.3",
@@ -33,7 +34,6 @@
         "vue-tsc": "^2.0.29"
     },
     "dependencies": {
-        "@nuxtjs/tailwindcss": "^6.12.1",
         "@radix-icons/vue": "^1.0.0",
         "@types/node": "^22.5.4",
         "@types/vue": "^2.0.0",

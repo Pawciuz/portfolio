@@ -2,12 +2,12 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
-interface ProjectData {
+export interface ProjectData {
     name: string;
     technologies: string[];
     features: string[];
-    methodology: string;
-    team: string;
+    methodology?: string;
+    team?: string;
     images: string[];
 }
 
