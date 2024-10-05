@@ -45,7 +45,8 @@ export default defineNuxtConfig({
 
     compatibilityDate: '2024-08-21',
     typescript: {
-        typeCheck: false,
+        strict: true,
+        typeCheck: true,
     },
     nitro: {
         prerender: {

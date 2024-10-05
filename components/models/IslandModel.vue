@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import islandSceneUrl from '@/assets/3d/island.glb?url';
 import { DRACOLoader } from 'three-stdlib';
 import { useGlobalState } from '~/composables/store/islandRotationState';
+import { ProgressBar } from '~/components/ui/progressBar';
 
 const props = defineProps<{
     isRotating: boolean;
@@ -15,6 +16,7 @@ const globalState = useGlobalState();
 const emit = defineEmits(['update:isRotating']);
 const container = ref<HTMLDivElement | null>(null);
 const isLoaded = ref(false);
+const loadingProgress = ref(0);
 
 const scene = shallowRef<THREE.Scene | null>(null);
 const camera = shallowRef<THREE.PerspectiveCamera | null>(null);
@@ -193,7 +195,19 @@ const initializeScene = () => {
         directionalLight.position.set(5, 10, 7.5);
         scene.value.add(directionalLight);
 
-        const loader = new GLTFLoader();
+        const loadingManager = new THREE.LoadingManager(
+            () => {
+                console.log('Loading complete!');
+                isLoaded.value = true;
+                animate();
+            },
+            (url, itemsLoaded, itemsTotal) => {
+                console.log(`Loading file: ${url}.\nLoaded ${itemsLoaded} of ${itemsTotal} files.`);
+                loadingProgress.value = (itemsLoaded / itemsTotal) * 100;
+            },
+        );
+
+        const loader = new GLTFLoader(loadingManager);
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
         loader.setDRACOLoader(dracoLoader);
@@ -202,8 +216,6 @@ const initializeScene = () => {
             island.value = gltf.scene;
             island.value.rotation.y = globalState.state.rotationPosition;
             scene.value?.add(island.value);
-            isLoaded.value = true;
-            animate();
         });
     }
 };
@@ -249,5 +261,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+    <div v-if="!isLoaded" class="flex h-full items-center justify-center">
+        <progress-bar :progress="loadingProgress" />
+    </div>
     <div ref="container" class="h-full w-full cursor-pointer overflow-hidden" />
 </template>

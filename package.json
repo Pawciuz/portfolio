@@ -34,10 +34,8 @@
     },
     "dependencies": {
         "@radix-icons/vue": "^1.0.0",
-        "@tresjs/cientos": "^4.0.0",
-        "@tresjs/core": "^4.2.7",
-        "@tresjs/nuxt": "^3.0.3",
         "@types/node": "^22.5.4",
+        "@types/vue": "^2.0.0",
         "@vee-validate/zod": "^4.13.2",
         "@vueuse/core": "^11.0.3",
         "class-variance-authority": "^0.7.0",

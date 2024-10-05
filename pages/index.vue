@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { type Ref, ref } from 'vue';
 import { useGlobalState } from '~/composables/store/islandRotationState';
-import IslandModel from '~/components/models/IslandModel.vue';
 
 definePageMeta({
-    keepalive: true
+    keepalive: true,
 });
 useHead({
-    title: 'Main page'
+    title: 'Main page',
 });
 const isRotating: Ref<boolean> = ref(false);
 const currentFocusPoint: Ref<number | null> = ref(null);
@@ -23,7 +22,7 @@ const updateIsRotating = (value: boolean): void => {
     <div class="relative h-[calc(100dvh-80px)] overflow-hidden overscroll-none">
         <HomeInfo :current-stage="globalState.state.currentStage" class="absolute left-1/2 top-10 translate-x-[-50%]" />
         <KeepAlive>
-            <IslandModel
+            <ModelsIslandModel
                 :is-rotating="isRotating"
                 :current-focus-point="currentFocusPoint"
                 @update:is-rotating="updateIsRotating"
