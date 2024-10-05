@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     modules: [
         '@nuxtjs/tailwindcss',
         'shadcn-nuxt',
-        '@tresjs/nuxt',
         '@nuxt/eslint',
         '@nuxt/icon',
         [
